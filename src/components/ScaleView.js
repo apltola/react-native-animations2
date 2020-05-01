@@ -2,29 +2,31 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Animated, TouchableWithoutFeedback, ScrollView } from 'react-native';
 
 
-const MovableView = () => {
-  const animation = useRef(new Animated.Value(0)).current;
+const ScaleView = () => {
+  const animation = useRef(new Animated.Value(1)).current;
 
   const startAnimation = () => {
     Animated.timing(animation, {
-      toValue: 100,
+      toValue: 2,
       duration: 500
     }).start(() => {
       Animated.timing(animation, {
-        toValue: -110,
-        duration: 300,
+        toValue: -1,
+        duration: 1000
       }).start(() => {
         Animated.timing(animation, {
-          toValue: 0,
-          duration: 200
-        }).start()
-      })
+          toValue: 1,
+          duration: 500
+        }).start();
+      });
     });
   }
 
   const animatedStyles = {
     transform: [{
-      translateX: animation
+      scaleX: animation,
+    },{
+      scaleY: animation
     }]
   }
 
@@ -40,8 +42,8 @@ const styles = StyleSheet.create({
     height: 150,
     width: 150,
     marginTop: 20,
-    backgroundColor: "#53d769"
+    backgroundColor: "#fd9426",
   }
 })
 
-export default MovableView;
+export default ScaleView;

@@ -2,35 +2,33 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Animated, TouchableWithoutFeedback, ScrollView } from 'react-native';
 
 
-const MovableView = () => {
+const InterpolationView = () => {
   const animation = useRef(new Animated.Value(0)).current;
 
   const startAnimation = () => {
     Animated.timing(animation, {
-      toValue: 100,
-      duration: 500
+      toValue: 1,
+      duration: 1000
     }).start(() => {
       Animated.timing(animation, {
-        toValue: -110,
-        duration: 300,
-      }).start(() => {
-        Animated.timing(animation, {
-          toValue: 0,
-          duration: 200
-        }).start()
-      })
+        toValue: 0,
+        duration: 800
+      }).start();
     });
   }
 
-  const animatedStyles = {
-    transform: [{
-      translateX: animation
-    }]
+  const boxInterpolation = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["rgb(255,99,71)", "rgb(99,71,255)"]
+  });
+
+  const boxAnimatedStyle = {
+    backgroundColor: boxInterpolation
   }
 
   return (
     <TouchableWithoutFeedback onPress={startAnimation}>
-      <Animated.View style={[styles.square, animatedStyles]} />
+      <Animated.View style={[styles.square, boxAnimatedStyle]} />
     </TouchableWithoutFeedback>
   )
 }
@@ -40,8 +38,7 @@ const styles = StyleSheet.create({
     height: 150,
     width: 150,
     marginTop: 20,
-    backgroundColor: "#53d769"
   }
 })
 
-export default MovableView;
+export default InterpolationView;
