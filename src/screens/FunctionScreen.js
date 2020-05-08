@@ -7,13 +7,22 @@ function FunctionScreen() {
   const pr = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onMoveShouldSetPanResponder: () => true,
+    onPanResponderGrant: () => {
+      animation.extractOffset();
+    },
     onPanResponderMove: Animated.event([
       null,
       {
         dx: animation.x,
         dy: animation.y
       }
-    ])
+    ]),
+    onPanResponderRelease: (e, {vx, vy}) => {
+      Animated.decay(animation, {
+        velocity: { x: vx, y: vy },
+        deceleration: 0.99
+      }).start()
+    }
   });
 
   const [panResponder, setPanResponder] = useState(pr);
