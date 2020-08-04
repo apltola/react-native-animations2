@@ -6,6 +6,7 @@ import AnimPropertyScreen from './src/screens/AnimPropertyScreen';
 import FunctionScreen from './src/screens/FunctionScreen';
 import PanScreen from './src/screens/PanScreen';
 import Corners from './src/screens/Corners';
+import CatCards from './src/screens/CatCards';
 
 StatusBar.setBarStyle('dark-content');
 
@@ -23,11 +24,12 @@ export default function App() {
 
   return (
     <NavigationContainer theme={Theme}>
-      <Tab.Navigator initialRouteName="function">
-        <Tab.Screen name="box" component={AnimPropertyScreen} />
-        <Tab.Screen name="function" component={FunctionScreen} />
-        <Tab.Screen name="pan" component={PanScreen} />
-        <Tab.Screen name="corners" component={Corners} />
+      <Tab.Navigator initialRouteName="pan">
+        <Tab.Screen name="1" component={AnimPropertyScreen} />
+        <Tab.Screen name="2" component={FunctionScreen} />
+        <Tab.Screen name="3" component={PanScreen} />
+        <Tab.Screen name="4" component={Corners} />
+        <Tab.Screen name="5" component={CatCards} />
       </Tab.Navigator>
     </NavigationContainer>
   );
