@@ -24,7 +24,7 @@ export default function App() {
 
   return (
     <NavigationContainer theme={Theme}>
-      <Tab.Navigator initialRouteName="pan">
+      <Tab.Navigator initialRouteName="5">
         <Tab.Screen name="1" component={AnimPropertyScreen} />
         <Tab.Screen name="2" component={FunctionScreen} />
         <Tab.Screen name="3" component={PanScreen} />
