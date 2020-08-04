@@ -8,14 +8,6 @@ import Cat4 from '../../assets/cat4.jpg';
 import Cat5 from '../../assets/cat5.jpg';
 import clamp from 'clamp';
 
-/* const DATA = [
-  { image: Cat1, id: 1, text: 'kissi' },
-  { image: Cat2, id: 2, text: 'kissi' },
-  { image: Cat3, id: 3, text: 'kissi' },
-  { image: Cat4, id: 4, text: 'kissi' },
-  { image: Cat5, id: 5, text: 'kissi' },
-] */
-
 const SWIPE_THRESHOLD = 120;
 const { height } = Dimensions.get("window");
 
@@ -45,6 +37,7 @@ const CatCards = () => {
       ]),
       onPanResponderRelease: (e, { dx, vx, vy }) => {
         let velocity;
+        console.log('vx => ', vx);
         if (vx >= 0) {
           velocity = clamp(vx, 3, 5);
         } else if (vx < 0) {
@@ -91,6 +84,18 @@ const CatCards = () => {
     return () => {};
   }, [data]);
 
+  const handleNo = () => {
+    Animated.timing(animation.x, {
+      toValue: -SWIPE_THRESHOLD
+    }).start(transitionNext);
+  }
+
+  const handleYes = () => {
+    Animated.timing(animation.x, {
+      toValue: SWIPE_THRESHOLD
+    }).start(transitionNext);
+  }
+
   const rotate = animation.x.interpolate({
     inputRange: [-200, 0, 200],
     outputRange: ["-30deg", "0deg", "30deg"],
@@ -121,9 +126,7 @@ const CatCards = () => {
     <View style={styles.container}>
       <View style={styles.top}>
         {
-          
           data.slice(0,2).reverse().map(({ image, id, text }, index, items) => {
-
             const isLastItem = index === items.length - 1;
             const isSecondToLastItem = index === items.length - 2;
 
@@ -145,7 +148,12 @@ const CatCards = () => {
         }
       </View>
       <View style={styles.buttonBar}>
-
+        <TouchableOpacity onPress={handleNo} style={[styles.button, styles.nopeButton]}>
+          <Text style={styles.nopeText}>ei</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleYes} style={[styles.button, styles.yupButton]}>
+          <Text style={styles.yupText}>joo</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
@@ -154,15 +162,17 @@ const CatCards = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    //justifyContent: 'center',
   },
   top: {
+    flex: 1,
     //borderWidth: 2,
     //borderColor: 'red',
     alignItems: "center",
     justifyContent: "center",
   },
   buttonBar: {
+    //flexGrow: 1,
     flexDirection: "row",
     justifyContent: 'center',
     alignItems: "center",
@@ -192,6 +202,32 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     padding: 5,
+  },
+  button: {
+    marginHorizontal: 10,
+    padding: 20,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowOpacity: 0.4,
+    shadowOffset: { x: 0, y: 0 },
+    shadowRadius: 5,
+  },
+  nopeButton: {
+    shadowColor: 'red',
+    //borderColor: 'red',
+    //borderWidth: 2,
+  },
+  yupButton: {
+    shadowColor: 'green',
+  },
+  nopeText: {
+    fontSize: 16,
+    color: '#fc3d39',
+  },
+  yupText: {
+    fontSize: 16,
+    color: '#30d158'
   }
 });
 

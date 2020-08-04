@@ -7,6 +7,7 @@ import FunctionScreen from './src/screens/FunctionScreen';
 import PanScreen from './src/screens/PanScreen';
 import Corners from './src/screens/Corners';
 import CatCards from './src/screens/CatCards';
+import Login from './src/screens/Login';
 
 StatusBar.setBarStyle('dark-content');
 
@@ -30,6 +31,7 @@ export default function App() {
         <Tab.Screen name="3" component={PanScreen} />
         <Tab.Screen name="4" component={Corners} />
         <Tab.Screen name="5" component={CatCards} />
+        <Tab.Screen name="6" component={Login} />
       </Tab.Navigator>
     </NavigationContainer>
   );
