@@ -5,7 +5,49 @@ import Background from '../../assets/catbackground.jpg';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
+const createAnimationStyle = animation => {
+  const translateY = animation.interpolate({
+    inputRange: [0,1],
+    outputRange: [-5,0]
+  })
+
+  return {
+    opacity: animation,
+    transform: [{
+      translateY: translateY
+    }]
+  }
+}
+
 const Login = () => {
+  const emailInput = useRef();
+  const emailAnim = useRef(new Animated.Value(0)).current;
+  const passwordAnim = useRef(new Animated.Value(0)).current;
+  const buttonAnim = useRef(new Animated.Value(0)).current;
+
+  const emailStyle = createAnimationStyle(emailAnim);
+  const passwordStyle = createAnimationStyle(passwordAnim);
+  const buttonStyle = createAnimationStyle(buttonAnim);
+
+  useEffect(() => {
+    Animated.stagger(100, [
+      Animated.timing(emailAnim, {
+        toValue: 1,
+        duration: 200
+      }),
+      Animated.timing(passwordAnim, {
+        toValue: 1,
+        duration: 200
+      }),
+      Animated.timing(buttonAnim, {
+        toValue: 1,
+        duration: 200
+      })
+    ]).start(() => {
+      //emailInput.current.getNode().focus();
+    })
+  }, [])
+
   return (
     <View style={styles.container}>
       <Image
@@ -18,17 +60,18 @@ const Login = () => {
         <View style={styles.container}>
           <Text style={styles.title}>Login</Text>
           <AnimatedTextInput
-            style={[styles.input]}
+            ref={emailInput}
+            style={[styles.input, emailStyle]}
             placeholder="Email"
             keyboardType="email-address"
           />
           <AnimatedTextInput
-            style={[styles.input]}
+            style={[styles.input, passwordStyle]}
             placeholder="Password"
             secureTextEntry
           />
           <TouchableOpacity>
-            <Animated.View style={[styles.button]}>
+            <Animated.View style={[styles.button, buttonStyle]}>
               <Text style={styles.buttonText}>Login</Text>
             </Animated.View>
           </TouchableOpacity>

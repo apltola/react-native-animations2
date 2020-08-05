@@ -22,7 +22,7 @@ const CatCards = () => {
 
   const animation = useRef(new Animated.ValueXY()).current;
   const opacity = useRef(new Animated.Value(1)).current;
-  const _next = useRef(new Animated.Value(.9)).current;
+  const _nextCard = useRef(new Animated.Value(.9)).current;
 
   const panResponder = useRef(
     PanResponder.create({
@@ -66,7 +66,7 @@ const CatCards = () => {
         toValue: 0,
         duration: 300
       }),
-      Animated.spring(_next, {
+      Animated.spring(_nextCard, {
         toValue: 1,
         friction: 4
       })
@@ -77,7 +77,7 @@ const CatCards = () => {
 
   useEffect(() => {
     console.log('data updated');
-    _next.setValue(.9);
+    _nextCard.setValue(.9);
     opacity.setValue(1);
     animation.setValue({x: 0, y: 0});
 
@@ -134,7 +134,7 @@ const CatCards = () => {
             const cardStyle = isLastItem ? animatedCardStyles : undefined;
             const imageStyle = isLastItem ? animatedImageStyles : undefined;
 
-            const nextStyle = isSecondToLastItem ? { transform: [{ scale: _next }]} : undefined;
+            const nextStyle = isSecondToLastItem ? { transform: [{ scale: _nextCard }]} : undefined;
 
             return (
               <Animated.View key={id} style={[styles.card, cardStyle, nextStyle]} {...panHandlers}>
