@@ -46,6 +46,12 @@ const Login = () => {
     ]).start(() => {
       //emailInput.current.getNode().focus();
     })
+
+    return () => {
+      emailAnim.setValue(0);
+      passwordAnim.setValue(0);
+      buttonAnim.setValue(0);
+    }
   }, [])
 
   return (
